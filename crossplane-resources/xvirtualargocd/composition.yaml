@@ -20,19 +20,19 @@ spec:
           chart:
             name: vcluster
             repository: https://charts.loft.sh
-            version: 0.14.0
+            version: 0.25.0
           namespace: vcluster-test
-          values:
-            syncer:
-              extraArgs:
-              - --out-kube-config-secret=vcluster-kubeconfig
-              - --out-kube-config-server=https://vcluster-test.vcluster-test.svc.cluster.local
-              - --tls-san=vcluster-test.vcluster-test.svc.cluster.local
-            sync:
-              ingresses:
-                enabled: true
-              poddisruptionbudgets:
-                enabled: true
+          # values:
+          #   syncer:
+          #     extraArgs:
+          #     - --out-kube-config-secret=vcluster-kubeconfig
+          #     - --out-kube-config-server=https://vcluster-test.vcluster-test.svc.cluster.local
+          #     - --tls-san=vcluster-test.vcluster-test.svc.cluster.local
+          #   sync:
+          #     ingresses:
+          #       enabled: true
+          #     poddisruptionbudgets:
+          #       enabled: true
         providerConfigRef:
           name: default
     patches:
