@@ -20,19 +20,35 @@ spec:
           chart:
             name: vcluster
             repository: https://charts.loft.sh
-            version: 0.14.0
+            version: 0.25.0
           namespace: vcluster-test
           values:
-            syncer:
-              extraArgs:
-              - --out-kube-config-secret=vcluster-kubeconfig
-              - --out-kube-config-server=https://vcluster-test.vcluster-test.svc.cluster.local
-              - --tls-san=vcluster-test.vcluster-test.svc.cluster.local
+            controlPlane:
+              ingress:
+                enabled: true
+                host: tenant-dev.vcluster.local
+                spec:
+                  ingressClassName: nginx
+              proxy:
+                extraSANs:
+                - tenant-dev.vcluster.local
             sync:
-              ingresses:
-                enabled: true
-              poddisruptionbudgets:
-                enabled: true
+              fromHost:
+                ingressClasses:
+                  enabled: true
+              toHost:
+                ingresses:
+                  enabled: true
+            # syncer:
+            #   extraArgs:
+            #   - --out-kube-config-secret=vcluster-kubeconfig
+            #   - --out-kube-config-server=https://vcluster-test.vcluster-test.svc.cluster.local
+            #   - --tls-san=vcluster-test.vcluster-test.svc.cluster.local
+            # sync:
+            #   ingresses:
+            #     enabled: true
+            #   poddisruptionbudgets:
+            #     enabled: true
         providerConfigRef:
           name: default
     patches:
